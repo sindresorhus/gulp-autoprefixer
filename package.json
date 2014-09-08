@@ -1,0 +1,42 @@
+{
+  "name": "gulp-autoprefixer",
+  "version": "0.0.0",
+  "description": "Prefix CSS",
+  "license": "MIT",
+  "repository": "sindresorhus/gulp-autoprefixer",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "autoprefixer",
+    "postcss",
+    "css",
+    "prefix",
+    "prefixes",
+    "stylesheet",
+    "preprocess"
+  ],
+  "dependencies": {
+    "autoprefixer-core": "^3.0.1",
+    "gulp-util": "^3.0.0",
+    "object-assign": "^1.0.0",
+    "through2": "^0.6.1",
+    "vinyl-sourcemaps-apply": "^0.1.1"
+  },
+  "devDependencies": {
+    "gulp-sourcemaps": "^1.1.1",
+    "mocha": "*"
+  }
+}
