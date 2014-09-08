@@ -38,7 +38,7 @@ gulp.task('default', function () {
 ##### browsers
 
 Type: `array`  
-Default: `> 1%, last 2 versions, Firefox ESR, Opera 12.1`
+Default: `['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']`
 
 [Browsers](https://github.com/postcss/autoprefixer#browsers) you want to target.
 
