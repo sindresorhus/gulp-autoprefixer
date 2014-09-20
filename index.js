@@ -32,7 +32,7 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
-				applySourceMap(file, res.map.toString());
+				applySourceMap(file.relative, res.map.toString());
 			}
 
 			cb(null, file);
