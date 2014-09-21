@@ -33,7 +33,7 @@ it('should generate source maps', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.equal(file.sourceMap.mappings, 'AAAA;CACC,sBAAc;CAAd,uBAAc;CAAd,sBAAc;CAAd,eAAc;EACd');
+		assert.equal(file.sourceMap.mappings, 'AAAA;CACC,uBAAc;CAAd,sBAAc;CAAd,eAAc;EACd');
 		var contents = file.contents.toString();
 		assert(/flex/.test(contents));
 		assert(/sourceMappingURL=data:application\/json;base64/.test(contents));
