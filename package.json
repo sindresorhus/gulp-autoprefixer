@@ -1,6 +1,6 @@
 {
   "name": "gulp-autoprefixer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Prefix CSS",
   "license": "MIT",
   "repository": "sindresorhus/gulp-autoprefixer",
@@ -32,8 +32,8 @@
     "autoprefixer-core": "^3.0.1",
     "gulp-util": "^3.0.0",
     "object-assign": "^1.0.0",
-    "through2": "^0.6.1",
-    "vinyl-sourcemaps-apply": "^0.1.1"
+    "through2": "^0.6.2",
+    "vinyl-sourcemaps-apply": "^0.1.3"
   },
   "devDependencies": {
     "gulp-sourcemaps": "^1.1.1",
