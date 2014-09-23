@@ -25,14 +25,14 @@ module.exports = function (opts) {
 		try {
 			res = autoprefixer(fileOpts).process(file.contents.toString(), {
 				map: file.sourceMap ? {annotation: false} : false,
-				from: file.relative,
+				from: file.sourceMap ? file.sourceMap.sources[0] : file.relative,
 				to: file.relative
 			});
 
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
-				applySourceMap(file.relative, res.map.toString());
+				applySourceMap(file, res.map.toString());
 			}
 
 			cb(null, file);
