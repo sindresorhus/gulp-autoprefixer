@@ -21,10 +21,15 @@ module.exports = function (opts) {
 
 		var res;
 		var fileOpts = objectAssign({}, opts);
+		var mapOpts = {annotation: false};
 
 		try {
+			if (file.sourceMap && file.sourceMap.mappings !== '') {
+				mapOpts = objectAssign(mapOpts, {prev: file.sourceMap});
+			}
+
 			res = autoprefixer(fileOpts).process(file.contents.toString(), {
-				map: file.sourceMap ? {annotation: false} : false,
+				map: file.sourceMap ? mapOpts : false,
 				from: file.relative,
 				to: file.relative
 			});
