@@ -52,3 +52,38 @@ it('should generate source maps', function (cb) {
 
 	init.end();
 });
+
+it('should read upstream source maps', function (cb) {
+	var stream = autoprefixer();
+	var write = sourceMaps.write();
+	var testFile;
+	var sourcesContent = [ 'a {\n  display: flex;\n}\n', 'a {\n\tdisplay: flex;\n}\n' ];
+
+	stream
+		.pipe(write);
+
+	write.on('data', function (file) {
+		assert.equal(file.sourceMap.sourcesContent[0], sourcesContent[0]);
+		assert.equal(file.sourceMap.sourcesContent[1], sourcesContent[1]);
+		cb();
+	});
+
+	stream.write(
+		testFile = new gutil.File({
+			cwd: __dirname,
+			base: __dirname + '/fixture',
+			path: __dirname + '/fixture/fixture.css',
+			contents: new Buffer('a {\n\tdisplay: flex;\n}\n'),
+		}),
+		testFile.sourceMap = {
+			version: 3,
+			sources: [ 'imported.less' ],
+			names: [],
+			mappings: 'AAAA;EACC,aAAA',
+			file: 'fixture.css',
+			sourcesContent: [ 'a {\n  display: flex;\n}\n' ]
+		}
+	);
+
+	stream.end();
+});
