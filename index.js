@@ -32,7 +32,23 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
-				applySourceMap(file, res.map.toString());
+				var resMap = JSON.parse(res.map.toString());
+
+				var origMap = file.sourceMap;
+				if (!origMap.sources) {
+					origMap.sources = [];
+				}
+				origMap.sources.push(file.path);
+
+				if (!origMap.sourcesContent) {
+					origMap.sourcesContent = [];
+				}
+				var index = origMap.sources.length - 1;
+				origMap.sourcesContent[index] = file.contents.toString();
+
+				origMap.mappings += ' ' + resMap.mappings;
+
+				//applySourceMap(file, res.map.toString());
 			}
 
 			cb(null, file);
