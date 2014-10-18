@@ -46,7 +46,7 @@ module.exports = function (opts) {
 				var index = origMap.sources.length - 1;
 				origMap.sourcesContent[index] = file.contents.toString();
 
-				origMap.mappings += ' ' + resMap.mappings;
+				origMap.mappings += resMap.mappings;
 
 				//applySourceMap(file, res.map.toString());
 			}
