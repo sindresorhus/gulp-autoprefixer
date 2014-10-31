@@ -7,6 +7,10 @@ var objectAssign = require('object-assign');
 
 module.exports = function (opts) {
 	opts = opts || {};
+	// Backwards compatibility with older versions.
+	if (typeof opts === "string") {
+		opts = { browsers: [].slice.call(arguments) };
+	}
 
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
