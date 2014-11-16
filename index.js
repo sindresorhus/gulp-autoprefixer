@@ -35,9 +35,11 @@ module.exports = function (opts) {
 				applySourceMap(file, res.map.toString());
 			}
 
-			cb(null, file);
+			this.push(file);
 		} catch (err) {
-			cb(new gutil.PluginError('gulp-autoprefixer', err, {fileName: file.path}));
+			this.emit('error', new gutil.PluginError('gulp-autoprefixer', err, {fileName: file.path}));
 		}
+
+		cb();
 	});
 };
