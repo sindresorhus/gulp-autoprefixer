@@ -49,6 +49,13 @@ Default: `true`
 
 Changes the CSS indentation to create a nice [visual cascade](https://github.com/postcss/autoprefixer#visual-cascade) of prefixes.
 
+##### remove
+
+Type: `boolean`  
+Default: `true`
+
+Remove unneeded prefixes.
+
 
 ## Source Maps
 
