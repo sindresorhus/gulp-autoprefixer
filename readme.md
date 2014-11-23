@@ -72,7 +72,7 @@ gulp.task('default', function () {
 		.pipe(sourcemaps.init())
 		.pipe(autoprefixer())
 		.pipe(concat('all.css'))
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist'));
 });
 ```
