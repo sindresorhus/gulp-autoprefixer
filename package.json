@@ -26,12 +26,14 @@
     "prefix",
     "prefixes",
     "stylesheet",
-    "preprocess"
+    "preprocess",
+    "postcssrunner"
   ],
   "dependencies": {
     "autoprefixer-core": "^5.0.0",
     "gulp-util": "^3.0.0",
     "object-assign": "^2.0.0",
+    "postcss": "^4.1.5",
     "through2": "^0.6.2",
     "vinyl-sourcemaps-apply": "^0.1.3"
   },

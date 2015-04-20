@@ -4,6 +4,8 @@ var through = require('through2');
 var autoprefixer = require('autoprefixer-core');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
+var postcss = require('postcss');
+var CssSyntaxError = require('postcss/lib/css-syntax-error');
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -19,27 +21,42 @@ module.exports = function (opts) {
 			return;
 		}
 
-		var res;
-		var fileOpts = objectAssign({}, opts);
-
 		try {
-			res = autoprefixer(fileOpts).process(file.contents.toString(), {
-				map: file.sourceMap ? {annotation: false} : false,
-				from: file.relative,
-				to: file.relative
+			var fileOpts = objectAssign({}, opts);
+			var processor = postcss()
+				.use(autoprefixer(fileOpts))
+				.process(file.contents.toString(), {
+					map: file.sourceMap ? {annotation: false} : false,
+					from: file.path,
+					to: file.path
+				});
+
+			processor.then(function (res) {
+				file.contents = new Buffer(res.css);
+
+				if (res.map && file.sourceMap) {
+					applySourceMap(file, res.map.toString());
+				}
+
+				if (res.warnings && res.warnings()) {
+					res.warnings().forEach(function (warn) {
+						gutil.log(warn.toString());
+					});
+				}
+
+				cb(null, file);
 			});
+		} catch (err) {
+			var cssError = err instanceof CssSyntaxError;
 
-			file.contents = new Buffer(res.css);
-
-			if (res.map && file.sourceMap) {
-				applySourceMap(file, res.map.toString());
+			if (cssError) {
+				err.message = err.message + err.showSourceCode();
 			}
 
-			this.push(file);
-		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-autoprefixer', err, {fileName: file.path}));
+			cb(new gutil.PluginError('gulp-autoprefixer', err, {
+				fileName: file.path,
+				showStack: !cssError
+			}));
 		}
-
-		cb();
 	});
 };
