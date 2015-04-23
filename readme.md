@@ -7,7 +7,7 @@
 
 ## Install
 
-```sh
+```
 $ npm install --save-dev gulp-autoprefixer
 ```
 
@@ -31,7 +31,7 @@ gulp.task('default', function () {
 
 ## API
 
-### autoprefixer(options)
+### autoprefixer([options])
 
 #### options
 
