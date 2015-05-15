@@ -11,6 +11,20 @@ module.exports = function (opts) {
 	opts = opts || {};
 
 	return through.obj(function (file, enc, cb) {
+
+		function processError(err) {
+			var cssError = err instanceof CssSyntaxError;
+
+			if (cssError) {
+				err.message = err.message + err.showSourceCode();
+			}
+
+			cb(new gutil.PluginError('gulp-autoprefixer', err, {
+				fileName: file.path,
+				showStack: !cssError
+			}));
+		}
+
 		if (file.isNull()) {
 			cb(null, file);
 			return;
@@ -45,18 +59,9 @@ module.exports = function (opts) {
 				}
 
 				cb(null, file);
-			});
+			}, processError);
 		} catch (err) {
-			var cssError = err instanceof CssSyntaxError;
-
-			if (cssError) {
-				err.message = err.message + err.showSourceCode();
-			}
-
-			cb(new gutil.PluginError('gulp-autoprefixer', err, {
-				fileName: file.path,
-				showStack: !cssError
-			}));
+			processError(err);
 		}
 	});
 };
