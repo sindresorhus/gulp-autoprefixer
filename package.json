@@ -27,7 +27,7 @@
     "prefixes",
     "stylesheet",
     "preprocess",
-    "postcssrunner"
+    "postcss-runner"
   ],
   "dependencies": {
     "autoprefixer-core": "^5.0.0",
