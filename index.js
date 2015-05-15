@@ -8,8 +8,6 @@ var postcss = require('postcss');
 var CssSyntaxError = require('postcss/lib/css-syntax-error');
 
 module.exports = function (opts) {
-	opts = opts || {};
-
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
