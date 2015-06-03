@@ -40,8 +40,10 @@ module.exports = function (opts) {
 				gutil.log('gulp-autoprefixer:', '\n  ' + warnings.join('\n  '));
 			}
 
+		}).then(function () {
 			cb(null, file);
-		}).catch(function (err) {
+
+		}, function (err) {
 			var cssError = err.name === 'CssSyntaxError';
 
 			if (cssError) {
