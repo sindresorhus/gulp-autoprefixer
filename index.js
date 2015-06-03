@@ -48,7 +48,8 @@ module.exports = function (opts) {
 				err.message = err.message + err.showSourceCode();
 			}
 
-			cb(new gutil.PluginError('gulp-autoprefixer', err, {
+			// prevent stream unhandled exception from being suppressed by Promise
+			setImmediate(cb, new gutil.PluginError('gulp-autoprefixer', err, {
 				fileName: file.path,
 				showStack: !cssError
 			}));
