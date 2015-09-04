@@ -2,8 +2,7 @@
 var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
-var objectAssign = require('object-assign');
-var autoprefixer = require('autoprefixer-core');
+var autoprefixer = require('autoprefixer');
 var postcss = require('postcss');
 
 module.exports = function (opts) {
@@ -18,9 +17,8 @@ module.exports = function (opts) {
 			return;
 		}
 
-		var fileOpts = objectAssign({}, opts);
 		var processor = postcss()
-			.use(autoprefixer(fileOpts))
+			.use(autoprefixer(opts))
 			.process(file.contents.toString(), {
 				map: file.sourceMap ? {annotation: false} : false,
 				from: file.path,

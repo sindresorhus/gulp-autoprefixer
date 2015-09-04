@@ -1,8 +1,8 @@
 # gulp-autoprefixer [![Build Status](https://travis-ci.org/sindresorhus/gulp-autoprefixer.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-autoprefixer)
 
-> Prefix CSS with [Autoprefixer](https://github.com/postcss/autoprefixer-core)
+> Prefix CSS with [Autoprefixer](https://github.com/postcss/autoprefixer)
 
-*Issues with the output should be reported on the Autoprefixer [issue tracker](https://github.com/postcss/autoprefixer-core/issues).*
+*Issues with the output should be reported on the Autoprefixer [issue tracker](https://github.com/postcss/autoprefixer/issues).*
 
 
 ## Install
@@ -35,26 +35,7 @@ gulp.task('default', function () {
 
 #### options
 
-##### browsers
-
-Type: `array`  
-Default: `['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']`
-
-[Browsers](https://github.com/postcss/autoprefixer#browsers) you want to target.
-
-##### cascade
-
-Type: `boolean`  
-Default: `true`
-
-Changes the CSS indentation to create a nice [visual cascade](https://github.com/postcss/autoprefixer#visual-cascade) of prefixes.
-
-##### remove
-
-Type: `boolean`  
-Default: `true`
-
-Remove unneeded prefixes.
+See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
 
 
 ## Source Maps
