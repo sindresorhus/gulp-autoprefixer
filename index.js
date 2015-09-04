@@ -43,7 +43,7 @@ module.exports = function (opts) {
 			var cssError = err.name === 'CssSyntaxError';
 
 			if (cssError) {
-				err.message = err.message + err.showSourceCode();
+				err.message += err.showSourceCode();
 			}
 
 			// prevent stream unhandled exception from being suppressed by Promise

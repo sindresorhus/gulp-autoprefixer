@@ -1,4 +1,6 @@
+/* eslint-env mocha */
 'use strict';
+var path = require('path');
 var assert = require('assert');
 var gutil = require('gulp-util');
 var sourceMaps = require('gulp-sourcemaps');
@@ -16,8 +18,8 @@ it('should autoprefix CSS', function (cb) {
 
 	stream.write(new gutil.File({
 		cwd: __dirname,
-		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.css',
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture', 'fixture.css'),
 		contents: new Buffer('a {\n\tdisplay: flex;\n}')
 	}));
 
@@ -44,8 +46,8 @@ it('should generate source maps', function (cb) {
 
 	init.write(new gutil.File({
 		cwd: __dirname,
-		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.css',
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture', 'fixture.css'),
 		contents: new Buffer('a {\n\tdisplay: flex;\n}'),
 		sourceMap: ''
 	}));
@@ -73,9 +75,9 @@ it('should read upstream source maps', function (cb) {
 	stream.write(
 		testFile = new gutil.File({
 			cwd: __dirname,
-			base: __dirname + '/fixture',
-			path: __dirname + '/fixture/fixture.css',
-			contents: new Buffer('a {\n\tdisplay: flex;\n}\n'),
+			base: path.join(__dirname, 'fixture'),
+			path: path.join(__dirname, 'fixture', 'fixture.css'),
+			contents: new Buffer('a {\n\tdisplay: flex;\n}\n')
 		}),
 		testFile.sourceMap = {
 			version: 3,
