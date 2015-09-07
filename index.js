@@ -20,7 +20,7 @@ module.exports = function (opts) {
 		var processor = postcss()
 			.use(autoprefixer(opts))
 			.process(file.contents.toString(), {
-				map: file.sourceMap ? {annotation: false} : false,
+				map: file.sourceMap ? {annotation: false, prev: JSON.stringify(file.sourceMap)} : false,
 				from: file.path,
 				to: file.path
 			});
@@ -29,7 +29,11 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
+				var originalFile = file.sourceMap.file;
+				var originalSources = file.sourceMap.sources;
 				applySourceMap(file, res.map.toString());
+				file.sourceMap.file = originalFile;
+				file.sourceMap.sources = originalSources;
 			}
 
 			var warnings = res.warnings();
