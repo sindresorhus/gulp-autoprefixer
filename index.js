@@ -17,15 +17,11 @@ module.exports = function (opts) {
 			return;
 		}
 
-		var processor = postcss()
-			.use(autoprefixer(opts))
-			.process(file.contents.toString(), {
-				map: file.sourceMap ? {annotation: false} : false,
-				from: file.path,
-				to: file.path
-			});
-
-		processor.then(function (res) {
+		postcss(autoprefixer(opts)).process(file.contents.toString(), {
+			map: file.sourceMap ? {annotation: false} : false,
+			from: file.path,
+			to: file.path
+		}).then(function (res) {
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
@@ -38,7 +34,7 @@ module.exports = function (opts) {
 				gutil.log('gulp-autoprefixer:', '\n  ' + warnings.join('\n  '));
 			}
 
-			cb(null, file);
+			setImmediate(cb, null, file);
 		}).catch(function (err) {
 			var cssError = err.name === 'CssSyntaxError';
 
