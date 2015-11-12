@@ -1,4 +1,7 @@
 'use strict';
+
+require('es6-promise').polyfill();
+
 var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
