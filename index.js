@@ -5,7 +5,7 @@ var applySourceMap = require('vinyl-sourcemaps-apply');
 var autoprefixer = require('autoprefixer');
 var postcss = require('postcss');
 
-module.exports = function (opts) {
+gulpAutoprefixer = function (opts) {
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
@@ -50,3 +50,8 @@ module.exports = function (opts) {
 		});
 	});
 };
+
+gulpAutoprefixer.postcss = postcss;
+gulpAutoprefixer.autoprefixer = autoprefixer;
+
+module.exports = gulpAutoprefixer;
