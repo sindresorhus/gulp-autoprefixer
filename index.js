@@ -5,7 +5,7 @@ var applySourceMap = require('vinyl-sourcemaps-apply');
 var autoprefixer = require('autoprefixer');
 var postcss = require('postcss');
 
-gulpAutoprefixer = function (opts) {
+var gulpAutoprefixer = function (opts) {
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
