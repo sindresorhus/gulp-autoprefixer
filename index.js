@@ -31,7 +31,7 @@ module.exports = function (opts) {
 				map.file = file.relative;
 				map.sources = [].map.call(map.sources, function (source) {
 					return path.join(path.dirname(file.relative), source);
-				})
+				});
 				applySourceMap(file, map);
 			}
 
