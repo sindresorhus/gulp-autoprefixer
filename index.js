@@ -4,6 +4,7 @@ var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var autoprefixer = require('autoprefixer');
 var postcss = require('postcss');
+var path = require('path');
 
 module.exports = function (opts) {
 	return through.obj(function (file, enc, cb) {
@@ -22,10 +23,16 @@ module.exports = function (opts) {
 			from: file.path,
 			to: file.path
 		}).then(function (res) {
+			var map;
 			file.contents = new Buffer(res.css);
 
 			if (res.map && file.sourceMap) {
-				applySourceMap(file, res.map.toString());
+				map = res.map.toJSON();
+				map.file = file.relative;
+				map.sources = [].map.call(map.sources, function (source) {
+					return path.join(path.dirname(file.relative), source);
+				})
+				applySourceMap(file, map);
 			}
 
 			var warnings = res.warnings();
