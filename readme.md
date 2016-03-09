@@ -59,6 +59,10 @@ gulp.task('default', function () {
 ```
 
 
+## Alternatives
+Gulp-autoprefixer uses [PostCSS](http://postcss.org/) under the hood. You might consider [using it directly](https://github.com/postcss/autoprefixer#gulp) in your build processes.
+
+
 ## License
 
 MIT © [Sindre Sorhus](http://sindresorhus.com)
