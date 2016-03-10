@@ -15,17 +15,17 @@ $ npm install --save-dev gulp-autoprefixer
 ## Usage
 
 ```js
-var gulp = require('gulp');
-var autoprefixer = require('gulp-autoprefixer');
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
 
-gulp.task('default', function () {
-	return gulp.src('src/app.css')
+gulp.task('default', () =>
+	gulp.src('src/app.css')
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions'],
 			cascade: false
 		}))
-		.pipe(gulp.dest('dist'));
-});
+		.pipe(gulp.dest('dist'))
+);
 ```
 
 
@@ -43,19 +43,19 @@ See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
 Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
 
 ```js
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('gulp-autoprefixer');
-var concat = require('gulp-concat');
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const autoprefixer = require('gulp-autoprefixer');
+const concat = require('gulp-concat');
 
-gulp.task('default', function () {
-	return gulp.src('src/**/*.css')
+gulp.task('default', () =>
+	gulp.src('src/**/*.css')
 		.pipe(sourcemaps.init())
 		.pipe(autoprefixer())
 		.pipe(concat('all.css'))
 		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest('dist'));
-});
+		.pipe(gulp.dest('dist'))
+);
 ```
 
 
@@ -66,4 +66,4 @@ You might want to use Autoprefixer as a [PostCSS plugin](https://github.com/post
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
