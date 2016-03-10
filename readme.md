@@ -59,6 +59,11 @@ gulp.task('default', function () {
 ```
 
 
+## Tip
+
+You might want to use Autoprefixer as a [PostCSS plugin](https://github.com/postcss/autoprefixer#gulp) if you use other PostCSS plugins in your build process.
+
+
 ## License
 
 MIT © [Sindre Sorhus](http://sindresorhus.com)
