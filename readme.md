@@ -67,7 +67,8 @@ gulp.task('default', () =>
 
 ## Tip
 
-If you use other PostCSS based tools (like `cssnano`), you may want to run them together by [`gulp-postcss`](https://github.com/postcss/autoprefixer#gulp). It will get you better perfomance, because CSS will be parsed only once for all PostCSS based tools includes Autoprefixer.
+If you use other PostCSS based tools, like `cssnano`, you may want to run them together using [`gulp-postcss`](https://github.com/postcss/autoprefixer#gulp) instead of `gulp-autoprefixer`. It will be faster, as the CSS is parsed only once for all PostCSS based tools, including Autoprefixer.
+
 
 ## License
 
