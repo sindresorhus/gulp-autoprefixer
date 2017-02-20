@@ -40,7 +40,7 @@ it('should generate source maps', function (cb) {
 		assert.equal(file.sourceMap.mappings, 'AAAA;CACC,cAAc;CACd');
 		var contents = file.contents.toString();
 		assert(/flex/.test(contents));
-		assert(/sourceMappingURL=data:application\/json;base64/.test(contents));
+		assert(/sourceMappingURL=data:application\/json;charset=utf8;base64/.test(contents));
 		cb();
 	});
 
