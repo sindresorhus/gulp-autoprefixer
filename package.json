@@ -31,6 +31,7 @@
   ],
   "dependencies": {
     "autoprefixer": "^6.0.0",
+    "es6-promise": "^3.0.2",
     "gulp-util": "^3.0.0",
     "postcss": "^5.0.4",
     "through2": "^2.0.0",
