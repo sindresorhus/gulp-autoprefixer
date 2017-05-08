@@ -1,12 +1,12 @@
 'use strict';
-var gutil = require('gulp-util');
-var through = require('through2');
-var applySourceMap = require('vinyl-sourcemaps-apply');
-var autoprefixer = require('autoprefixer');
-var postcss = require('postcss');
+const gutil = require('gulp-util');
+const through = require('through2');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const autoprefixer = require('autoprefixer');
+const postcss = require('postcss');
 
-module.exports = function (opts) {
-	return through.obj(function (file, enc, cb) {
+module.exports = opts => {
+	return through.obj((file, enc, cb) => {
 		if (file.isNull()) {
 			cb(null, file);
 			return;
@@ -21,28 +21,28 @@ module.exports = function (opts) {
 			map: file.sourceMap ? {annotation: false} : false,
 			from: file.path,
 			to: file.path
-		}).then(function (res) {
-			file.contents = new Buffer(res.css);
+		}).then(res => {
+			file.contents = Buffer.from(res.css);
 
 			if (res.map && file.sourceMap) {
 				applySourceMap(file, res.map.toString());
 			}
 
-			var warnings = res.warnings();
+			const warnings = res.warnings();
 
 			if (warnings.length > 0) {
 				gutil.log('gulp-autoprefixer:', '\n  ' + warnings.join('\n  '));
 			}
 
 			setImmediate(cb, null, file);
-		}).catch(function (err) {
-			var cssError = err.name === 'CssSyntaxError';
+		}).catch(err => {
+			const cssError = err.name === 'CssSyntaxError';
 
 			if (cssError) {
 				err.message += err.showSourceCode();
 			}
 
-			// prevent stream unhandled exception from being suppressed by Promise
+			// Prevent stream unhandled exception from being suppressed by Promise
 			setImmediate(cb, new gutil.PluginError('gulp-autoprefixer', err, {
 				fileName: file.path,
 				showStack: !cssError

@@ -4,9 +4,11 @@
 
 *Issues with the output should be reported on the Autoprefixer [issue tracker](https://github.com/postcss/autoprefixer/issues).*
 
+
 ---
 
-<p align="center"><b>🔥 Want to strengthen your core JavaScript skills and master ES6?</b><br>I would personally recommend this awesome <a href="https://ES6.io/friend/AWESOME">ES6 course</a> by Wes Bos.</p>
+<p align="center">👾</p>
+<p align="center"><b>Improve your JavaScript skills with this awesome <a href="https://ES6.io/friend/AWESOME">ES6 course</a> by Wes Bos.</b><br>Try his free <a href="https://javascript30.com/friend/AWESOME">JavaScript 30 course</a> for a taste of what to expect. You might also like his <a href="https://ReactForBeginners.com/friend/AWESOME">React</a> & <a href="https://SublimeTextBook.com/friend/AWESOME">Sublime</a> course.</p>
 
 ---
 
@@ -41,12 +43,14 @@ gulp.task('default', () =>
 
 #### options
 
+Type: `Object`
+
 See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
 
 
 ## Source Maps
 
-Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
+Use [gulp-sourcemaps](https://github.com/gulp-sourcemaps/gulp-sourcemaps) like this:
 
 ```js
 const gulp = require('gulp');
