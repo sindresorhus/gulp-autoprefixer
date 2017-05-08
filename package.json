@@ -10,10 +10,10 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=4.5"
   },
   "scripts": {
-    "test": "xo && mocha"
+    "test": "xo && ava"
   },
   "files": [
     "index.js"
@@ -37,8 +37,9 @@
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
   "devDependencies": {
+    "ava": "*",
     "gulp-sourcemaps": "^2.6.0",
-    "mocha": "*",
+    "p-event": "^1.1.0",
     "xo": "*"
   }
 }

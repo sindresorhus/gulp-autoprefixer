@@ -1,50 +1,38 @@
-/* eslint-env mocha */
-'use strict';
-const path = require('path');
-const assert = require('assert');
-const gutil = require('gulp-util');
-const sourceMaps = require('gulp-sourcemaps');
-const autoprefixer = require('./');
+import path from 'path';
+import test from 'ava';
+import gutil from 'gulp-util';
+import sourceMaps from 'gulp-sourcemaps';
+import pEvent from 'p-event';
+import m from '.';
 
-it('should autoprefix CSS', cb => {
-	const stream = autoprefixer();
+test('autoprefix CSS', async t => {
+	const stream = m();
+	const data = pEvent(stream, 'data');
 
-	stream.on('data', file => {
-		assert(/-/.test(file.contents.toString()));
-		assert.equal(file.relative, 'fixture.css');
-	});
-
-	stream.on('end', cb);
-
-	stream.write(new gutil.File({
+	stream.end(new gutil.File({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
 		contents: Buffer.from('a {\n\tdisplay: flex;\n}')
 	}));
 
-	stream.end();
+	const file = await data;
+	t.true(/-/.test(file.contents.toString()));
+	t.is(file.relative, 'fixture.css');
 });
 
-it('should generate source maps', cb => {
+test('generate source maps', async t => {
 	const init = sourceMaps.init();
 	const write = sourceMaps.write();
+	const data = pEvent(write, 'data');
 
 	init
-		.pipe(autoprefixer({
+		.pipe(m({
 			browsers: ['Firefox ESR']
 		}))
 		.pipe(write);
 
-	write.on('data', file => {
-		assert.equal(file.sourceMap.mappings, 'AAAA;CACC,cAAc;CACd');
-		const contents = file.contents.toString();
-		assert(/flex/.test(contents));
-		assert(/sourceMappingURL=data:application\/json;charset=utf8;base64/.test(contents));
-		cb();
-	});
-
-	init.write(new gutil.File({
+	init.end(new gutil.File({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
@@ -52,27 +40,27 @@ it('should generate source maps', cb => {
 		sourceMap: ''
 	}));
 
-	init.end();
+	const file = await data;
+	t.is(file.sourceMap.mappings, 'AAAA;CACC,cAAc;CACd');
+	const contents = file.contents.toString();
+	t.true(/flex/.test(contents));
+	t.true(/sourceMappingURL=data:application\/json;charset=utf8;base64/.test(contents));
 });
 
-it('should read upstream source maps', cb => {
+test('read upstream source maps', async t => {
 	let testFile;
-	const stream = autoprefixer();
+	const stream = m();
 	const write = sourceMaps.write();
 	const sourcesContent = [
 		'a {\n  display: flex;\n}\n',
 		'a {\n\tdisplay: flex;\n}\n'
 	];
 
+	const data = pEvent(write, 'data');
+
 	stream.pipe(write);
 
-	write.on('data', file => {
-		assert.equal(file.sourceMap.sourcesContent[0], sourcesContent[0]);
-		assert.equal(file.sourceMap.sourcesContent[1], sourcesContent[1]);
-		cb();
-	});
-
-	stream.write(
+	stream.end(
 		testFile = new gutil.File({
 			cwd: __dirname,
 			base: path.join(__dirname, 'fixture'),
@@ -89,5 +77,7 @@ it('should read upstream source maps', cb => {
 		}
 	);
 
-	stream.end();
+	const file = await data;
+	t.is(file.sourceMap.sourcesContent[0], sourcesContent[0]);
+	t.is(file.sourceMap.sourcesContent[1], sourcesContent[1]);
 });
