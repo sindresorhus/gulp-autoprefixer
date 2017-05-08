@@ -30,7 +30,7 @@
     "postcss-runner"
   ],
   "dependencies": {
-    "autoprefixer": "^6.0.0",
+    "autoprefixer": "^7.0.0",
     "gulp-util": "^3.0.0",
     "postcss": "^5.0.4",
     "through2": "^2.0.0",
