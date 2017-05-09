@@ -18,7 +18,7 @@ module.exports = opts => {
 		}
 
 		postcss(autoprefixer(opts)).process(file.contents.toString(), {
-			map: file.sourceMap ? {annotation: false} : false,
+			map: file.sourceMap ? {annotation: false, prev: file.sourceMap} : false,
 			from: file.path,
 			to: file.path
 		}).then(res => {
