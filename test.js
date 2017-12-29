@@ -1,6 +1,6 @@
 import path from 'path';
 import test from 'ava';
-import gutil from 'gulp-util';
+import Vinyl from 'vinyl';
 import sourceMaps from 'gulp-sourcemaps';
 import pEvent from 'p-event';
 import m from '.';
@@ -9,7 +9,7 @@ test('autoprefix CSS', async t => {
 	const stream = m();
 	const data = pEvent(stream, 'data');
 
-	stream.end(new gutil.File({
+	stream.end(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
@@ -32,7 +32,7 @@ test('generate source maps', async t => {
 		}))
 		.pipe(write);
 
-	init.end(new gutil.File({
+	init.end(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
@@ -61,7 +61,7 @@ test('read upstream source maps', async t => {
 	stream.pipe(write);
 
 	stream.end(
-		testFile = new gutil.File({
+		testFile = new Vinyl({
 			cwd: __dirname,
 			base: path.join(__dirname, 'fixture'),
 			path: path.join(__dirname, 'fixture', 'fixture.css'),
