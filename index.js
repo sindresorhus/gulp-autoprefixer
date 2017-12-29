@@ -1,5 +1,6 @@
 'use strict';
-const gutil = require('gulp-util');
+const fancyLog = require('fancy-log');
+const PluginError = require('plugin-error');
 const through = require('through2');
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const autoprefixer = require('autoprefixer');
@@ -13,7 +14,7 @@ module.exports = opts => {
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-autoprefixer', 'Streaming not supported'));
+			cb(new PluginError('gulp-autoprefixer', 'Streaming not supported'));
 			return;
 		}
 
@@ -31,7 +32,7 @@ module.exports = opts => {
 			const warnings = res.warnings();
 
 			if (warnings.length > 0) {
-				gutil.log('gulp-autoprefixer:', '\n  ' + warnings.join('\n  '));
+				fancyLog('gulp-autoprefixer:', '\n  ' + warnings.join('\n  '));
 			}
 
 			setImmediate(cb, null, file);
@@ -43,7 +44,7 @@ module.exports = opts => {
 			}
 
 			// Prevent stream unhandled exception from being suppressed by Promise
-			setImmediate(cb, new gutil.PluginError('gulp-autoprefixer', err, {
+			setImmediate(cb, new PluginError('gulp-autoprefixer', err, {
 				fileName: file.path,
 				showStack: !cssError
 			}));
