@@ -13,7 +13,7 @@ test('autoprefix CSS', async t => {
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
-		contents: Buffer.from('a {\n\tdisplay: flex;\n}')
+		contents: Buffer.from('::placeholder {\n\tcolor: gray;\n}')
 	}));
 
 	const file = await data;
