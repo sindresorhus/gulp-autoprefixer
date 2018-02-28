@@ -5,19 +5,15 @@
 *Issues with the output should be reported on the Autoprefixer [issue tracker](https://github.com/postcss/autoprefixer/issues).*
 
 
----
-
-<p align="center">👾</p>
-<p align="center"><b>Improve your JavaScript skills with this awesome <a href="https://ES6.io/friend/AWESOME">ES6 course</a> by Wes Bos.</b><br>Try his free <a href="https://javascript30.com/friend/AWESOME">JavaScript 30 course</a> for a taste of what to expect. You might also like his <a href="https://ReactForBeginners.com/friend/AWESOME">React</a> & <a href="https://SublimeTextBook.com/friend/AWESOME">Sublime</a> course.</p>
-
----
-
-
 ## Install
 
 ```
 $ npm install --save-dev gulp-autoprefixer
 ```
+
+<a href="https://www.patreon.com/sindresorhus">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
 
 ## Usage
