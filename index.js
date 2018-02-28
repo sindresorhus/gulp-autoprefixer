@@ -28,9 +28,7 @@ module.exports = opts => {
 			if (res.map && file.sourceMap) {
 				const map = res.map.toJSON();
 				map.file = file.relative;
-				map.sources = map.sources.map(() => {
-					return file.relative;
-				});
+				map.sources = map.sources.map(() => file.relative);
 				applySourceMap(file, map);
 			}
 
