@@ -39,15 +39,15 @@ module.exports = opts => {
 			}
 
 			setImmediate(cb, null, file);
-		}).catch(err => {
-			const cssError = err.name === 'CssSyntaxError';
+		}).catch(error => {
+			const cssError = error.name === 'CssSyntaxError';
 
 			if (cssError) {
-				err.message += err.showSourceCode();
+				error.message += error.showSourceCode();
 			}
 
 			// Prevent stream unhandled exception from being suppressed by Promise
-			setImmediate(cb, new PluginError('gulp-autoprefixer', err, {
+			setImmediate(cb, new PluginError('gulp-autoprefixer', error, {
 				fileName: file.path,
 				showStack: !cssError
 			}));
