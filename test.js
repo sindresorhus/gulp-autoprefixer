@@ -3,10 +3,10 @@ import test from 'ava';
 import Vinyl from 'vinyl';
 import sourceMaps from 'gulp-sourcemaps';
 import pEvent from 'p-event';
-import m from '.';
+import autoprefixer from '.';
 
 test('autoprefix CSS', async t => {
-	const stream = m();
+	const stream = autoprefixer();
 	const data = pEvent(stream, 'data');
 
 	stream.end(new Vinyl({
@@ -27,7 +27,7 @@ test('generate source maps', async t => {
 	const data = pEvent(write, 'data');
 
 	init
-		.pipe(m({
+		.pipe(autoprefixer({
 			browsers: ['Firefox ESR']
 		}))
 		.pipe(write);
@@ -41,7 +41,7 @@ test('generate source maps', async t => {
 	}));
 
 	const file = await data;
-	t.is(file.sourceMap.mappings, 'AAAA;CACC,cAAc;CACd');
+	t.is(file.sourceMap.mappings, 'AAAA;CACC,aAAa;AACd');
 	const contents = file.contents.toString();
 	t.true(/flex/.test(contents));
 	t.true(/sourceMappingURL=data:application\/json;charset=utf8;base64/.test(contents));
@@ -49,7 +49,7 @@ test('generate source maps', async t => {
 
 test('read upstream source maps', async t => {
 	let testFile;
-	const stream = m();
+	const stream = autoprefixer();
 	const write = sourceMaps.write();
 	const sourcesContent = [
 		'a {\n  display: flex;\n}\n',
