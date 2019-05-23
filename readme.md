@@ -11,10 +11,6 @@
 $ npm install --save-dev gulp-autoprefixer
 ```
 
-<a href="https://www.patreon.com/sindresorhus">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
 
 ## Usage
 
@@ -39,7 +35,7 @@ gulp.task('default', () =>
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
 
@@ -68,8 +64,3 @@ gulp.task('default', () =>
 ## Tip
 
 If you use other PostCSS based tools, like `cssnano`, you may want to run them together using [`gulp-postcss`](https://github.com/postcss/autoprefixer#gulp) instead of `gulp-autoprefixer`. It will be faster, as the CSS is parsed only once for all PostCSS based tools, including Autoprefixer.
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
