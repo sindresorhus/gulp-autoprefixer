@@ -28,7 +28,7 @@ test('generate source maps', async t => {
 
 	init
 		.pipe(autoprefixer({
-			browsers: ['Firefox ESR']
+			overrideBrowserslist: ['Firefox ESR']
 		}))
 		.pipe(write);
 

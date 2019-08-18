@@ -18,10 +18,9 @@ $ npm install --save-dev gulp-autoprefixer
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 
-gulp.task('default', () =>
+exports.default = () => (
 	gulp.src('src/app.css')
 		.pipe(autoprefixer({
-			browsers: ['last 2 versions'],
 			cascade: false
 		}))
 		.pipe(gulp.dest('dist'))
@@ -31,7 +30,7 @@ gulp.task('default', () =>
 
 ## API
 
-### autoprefixer([options])
+### autoprefixer(options?)
 
 #### options
 
@@ -50,7 +49,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
 
-gulp.task('default', () =>
+exports.default = () => (
 	gulp.src('src/**/*.css')
 		.pipe(sourcemaps.init())
 		.pipe(autoprefixer())
