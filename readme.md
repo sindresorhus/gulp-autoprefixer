@@ -1,4 +1,4 @@
-# gulp-autoprefixer [![Build Status](https://travis-ci.org/sindresorhus/gulp-autoprefixer.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-autoprefixer)
+# gulp-autoprefixer
 
 > Prefix CSS with [Autoprefixer](https://github.com/postcss/autoprefixer)
 
