@@ -17,7 +17,7 @@ test('autoprefix CSS', async t => {
 	}));
 
 	const file = await data;
-	t.true(/-/.test(file.contents.toString()));
+	t.regex(file.contents.toString(), /-/);
 	t.is(file.relative, 'fixture.css');
 });
 
@@ -43,8 +43,8 @@ test('generate source maps', async t => {
 	const file = await data;
 	t.is(file.sourceMap.mappings, 'AAAA;CACC,aAAa;AACd');
 	const contents = file.contents.toString();
-	t.true(/flex/.test(contents));
-	t.true(/sourceMappingURL=data:application\/json;charset=utf8;base64/.test(contents));
+	t.regex(contents, /flex/);
+	t.regex(contents, /sourceMappingURL=data:application\/json;charset=utf8;base64/);
 });
 
 test('read upstream source maps', async t => {

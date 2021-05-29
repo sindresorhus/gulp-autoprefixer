@@ -4,13 +4,11 @@
 
 *Issues with the output should be reported on the Autoprefixer [issue tracker](https://github.com/postcss/autoprefixer/issues).*
 
-
 ## Install
 
 ```
 $ npm install --save-dev gulp-autoprefixer
 ```
-
 
 ## Usage
 
@@ -27,7 +25,6 @@ exports.default = () => (
 );
 ```
 
-
 ## API
 
 ### autoprefixer(options?)
@@ -37,7 +34,6 @@ exports.default = () => (
 Type: `object`
 
 See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
-
 
 ## Source Maps
 
@@ -58,7 +54,6 @@ exports.default = () => (
 		.pipe(gulp.dest('dist'))
 );
 ```
-
 
 ## Tip
 
