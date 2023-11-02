@@ -6,17 +6,17 @@
 
 ## Install
 
-```
-$ npm install --save-dev gulp-autoprefixer
+```sh
+npm install --save-dev gulp-autoprefixer
 ```
 
 ## Usage
 
 ```js
-const gulp = require('gulp');
-const autoprefixer = require('gulp-autoprefixer');
+import gulp from 'gulp';
+import autoprefixer from 'gulp-autoprefixer';
 
-exports.default = () => (
+export default () => (
 	gulp.src('src/app.css')
 		.pipe(autoprefixer({
 			cascade: false
@@ -40,12 +40,12 @@ See the Autoprefixer [options](https://github.com/postcss/autoprefixer#options).
 Use [gulp-sourcemaps](https://github.com/gulp-sourcemaps/gulp-sourcemaps) like this:
 
 ```js
-const gulp = require('gulp');
-const sourcemaps = require('gulp-sourcemaps');
-const autoprefixer = require('gulp-autoprefixer');
-const concat = require('gulp-concat');
+import gulp from 'gulp';
+import sourcemaps from 'gulp-sourcemaps';
+import concat from 'gulp-concat';
+import autoprefixer from 'gulp-autoprefixer';
 
-exports.default = () => (
+export default () => (
 	gulp.src('src/**/*.css')
 		.pipe(sourcemaps.init())
 		.pipe(autoprefixer())

@@ -1,9 +1,13 @@
-import path from 'path';
+import {Buffer} from 'node:buffer';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import test from 'ava';
 import Vinyl from 'vinyl';
 import sourceMaps from 'gulp-sourcemaps';
-import pEvent from 'p-event';
-import autoprefixer from '.';
+import {pEvent} from 'p-event';
+import autoprefixer from './index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('autoprefix CSS', async t => {
 	const stream = autoprefixer();
@@ -13,7 +17,7 @@ test('autoprefix CSS', async t => {
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
-		contents: Buffer.from('::placeholder {\n\tcolor: gray;\n}')
+		contents: Buffer.from('::placeholder {\n\tcolor: gray;\n}'),
 	}));
 
 	const file = await data;
@@ -28,7 +32,7 @@ test('generate source maps', async t => {
 
 	init
 		.pipe(autoprefixer({
-			overrideBrowserslist: ['Firefox ESR']
+			overrideBrowserslist: ['Firefox ESR'],
 		}))
 		.pipe(write);
 
@@ -37,7 +41,7 @@ test('generate source maps', async t => {
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture', 'fixture.css'),
 		contents: Buffer.from('a {\n\tdisplay: flex;\n}'),
-		sourceMap: ''
+		sourceMap: '',
 	}));
 
 	const file = await data;
@@ -48,36 +52,35 @@ test('generate source maps', async t => {
 });
 
 test('read upstream source maps', async t => {
-	let testFile;
 	const stream = autoprefixer();
-	const write = sourceMaps.write();
-	const sourcesContent = [
-		'a {\n  display: flex;\n}\n',
-		'a {\n\tdisplay: flex;\n}\n'
-	];
+	const finalStream = stream.pipe(sourceMaps.write());
+	const data = pEvent(finalStream, 'data');
 
-	const data = pEvent(write, 'data');
+	const testFile = new Vinyl({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture', 'fixture.css'),
+		contents: Buffer.from('a {\n\tdisplay: flex;\n}\n'),
+	});
 
-	stream.pipe(write);
+	testFile.sourceMap = {
+		version: 3,
+		sources: ['imported.less'],
+		names: [],
+		mappings: 'AAAA;EACC,aAAA',
+		file: 'fixture.css',
+		sourcesContent: ['a {\n  display: flex;\n}\n'],
+	};
 
-	stream.end(
-		testFile = new Vinyl({
-			cwd: __dirname,
-			base: path.join(__dirname, 'fixture'),
-			path: path.join(__dirname, 'fixture', 'fixture.css'),
-			contents: Buffer.from('a {\n\tdisplay: flex;\n}\n')
-		}),
-		testFile.sourceMap = {
-			version: 3,
-			sources: ['imported.less'],
-			names: [],
-			mappings: 'AAAA;EACC,aAAA',
-			file: 'fixture.css',
-			sourcesContent: ['a {\n  display: flex;\n}\n']
-		}
-	);
+	stream.end(testFile);
 
 	const file = await data;
+
+	const sourcesContent = [
+		'a {\n  display: flex;\n}\n',
+		'a {\n\tdisplay: flex;\n}\n',
+	];
+
 	t.is(file.sourceMap.sourcesContent[0], sourcesContent[0]);
 	t.is(file.sourceMap.sourcesContent[1], sourcesContent[1]);
 });
