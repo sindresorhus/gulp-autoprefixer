@@ -8,7 +8,7 @@ export default function gulpAutoprefixer(options) {
 	return gulpPlugin('gulp-autoprefixer', async file => {
 		try {
 			const result = await postcss(autoprefixer(options)).process(file.contents.toString(), {
-				map: file.sourceMap ? {annotation: false} : false,
+				map: file.sourceMap ? {annotation: false, prev: file.sourceMap} : false,
 				from: file.path,
 				to: file.path,
 			});
@@ -18,7 +18,6 @@ export default function gulpAutoprefixer(options) {
 			if (result.map && file.sourceMap) {
 				const map = result.map.toJSON();
 				map.file = file.relative;
-				map.sources = map.sources.map(() => file.relative);
 				applySourceMap(file, map);
 			}
 

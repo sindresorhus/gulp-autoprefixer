@@ -85,6 +85,40 @@ test('read upstream source maps', async t => {
 	t.is(file.sourceMap.sourcesContent[1], sourcesContent[1]);
 });
 
+test('preserve original source paths in sourcemaps', async t => {
+	const stream = autoprefixer();
+	const finalStream = stream.pipe(sourceMaps.write());
+	const data = pEvent(finalStream, 'data');
+
+	const testFile = new Vinyl({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture', 'output.css'),
+		contents: Buffer.from('a {\n\tdisplay: flex;\n}\n.button {\n\tcolor: red;\n}\n'),
+	});
+
+	// Simulate a sourcemap from multiple source files (like SASS imports)
+	testFile.sourceMap = {
+		version: 3,
+		sources: ['../scss/main.scss', '../scss/components/button.scss'],
+		names: [],
+		mappings: 'AAAA;EACC,aAAA;ACDD;EACC,UAAU;',
+		file: 'output.css',
+		sourcesContent: ['a {\n  display: flex;\n}\n', '.button {\n  color: red;\n}\n'],
+	};
+
+	stream.end(testFile);
+
+	const file = await data;
+
+	// Check that the original sources are preserved
+	t.true(file.sourceMap.sources.includes('../scss/main.scss'), 'Should preserve main.scss source');
+	t.true(file.sourceMap.sources.includes('../scss/components/button.scss'), 'Should preserve button.scss source');
+
+	// Ensure both original sources are preserved
+	t.true(file.sourceMap.sources.length >= 2, 'Should have at least the 2 original sources');
+});
+
 test('uses browserslist config from package.json', async t => {
 	const packageJson = JSON.parse(await import('node:fs').then(({promises: fs}) => fs.readFile(path.join(__dirname, 'package.json'), 'utf8')));
 	const originalBrowserslist = packageJson.browserslist;
