@@ -16,9 +16,7 @@ export default function gulpAutoprefixer(options) {
 			file.contents = Buffer.from(result.css);
 
 			if (result.map && file.sourceMap) {
-				const map = result.map.toJSON();
-				map.file = file.relative;
-				applySourceMap(file, map);
+				applySourceMap(file, result.map.toJSON());
 			}
 
 			const warnings = result.warnings();

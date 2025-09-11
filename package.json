@@ -11,15 +11,20 @@
 		"url": "https://sindresorhus.com"
 	},
 	"type": "module",
-	"exports": "./index.js",
+	"exports": {
+		"types": "./index.d.ts",
+		"default": "./index.js"
+	},
+	"sideEffects": false,
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"scripts": {
 		"test": "xo && ava"
 	},
 	"files": [
-		"index.js"
+		"index.js",
+		"index.d.ts"
 	],
 	"keywords": [
 		"gulpplugin",
@@ -33,17 +38,17 @@
 		"postcss-runner"
 	],
 	"dependencies": {
-		"autoprefixer": "^10.4.16",
-		"gulp-plugin-extras": "^0.2.2",
-		"postcss": "^8.4.31",
+		"autoprefixer": "^10.4.21",
+		"gulp-plugin-extras": "^1.1.0",
+		"postcss": "^8.5.6",
 		"vinyl-sourcemaps-apply": "^0.2.1"
 	},
 	"devDependencies": {
-		"ava": "^5.3.1",
+		"ava": "^6.4.1",
 		"gulp-sourcemaps": "^3.0.0",
-		"p-event": "^6.0.0",
-		"vinyl": "^3.0.0",
-		"xo": "^0.56.0"
+		"p-event": "^7.0.0",
+		"vinyl": "^3.0.1",
+		"xo": "^1.2.2"
 	},
 	"peerDependencies": {
 		"gulp": ">=4"

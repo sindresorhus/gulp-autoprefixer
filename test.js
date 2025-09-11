@@ -111,20 +111,18 @@ test('preserve original source paths in sourcemaps', async t => {
 
 	const file = await data;
 
-	// Check that the original sources are preserved
-	t.true(file.sourceMap.sources.includes('../scss/main.scss'), 'Should preserve main.scss source');
-	t.true(file.sourceMap.sources.includes('../scss/components/button.scss'), 'Should preserve button.scss source');
-
-	// Ensure both original sources are preserved
-	t.true(file.sourceMap.sources.length >= 2, 'Should have at least the 2 original sources');
+	// Verify original sources are preserved
+	t.true(file.sourceMap.sources.includes('../scss/main.scss'));
+	t.true(file.sourceMap.sources.includes('../scss/components/button.scss'));
 });
 
 test('uses browserslist config from package.json', async t => {
-	const packageJson = JSON.parse(await import('node:fs').then(({promises: fs}) => fs.readFile(path.join(__dirname, 'package.json'), 'utf8')));
+	const {promises: fs} = await import('node:fs');
+	const packageJson = JSON.parse(await fs.readFile(path.join(__dirname, 'package.json'), 'utf8'));
 	const originalBrowserslist = packageJson.browserslist;
 
 	packageJson.browserslist = ['last 1 Chrome version'];
-	await import('node:fs').then(({promises: fs}) => fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n'));
+	await fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n');
 
 	const stream = autoprefixer();
 	const data = pEvent(stream, 'data');
@@ -145,5 +143,5 @@ test('uses browserslist config from package.json', async t => {
 		delete packageJson.browserslist;
 	}
 
-	await import('node:fs').then(({promises: fs}) => fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n'));
+	await fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n');
 });
