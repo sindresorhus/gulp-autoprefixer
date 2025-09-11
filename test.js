@@ -84,3 +84,32 @@ test('read upstream source maps', async t => {
 	t.is(file.sourceMap.sourcesContent[0], sourcesContent[0]);
 	t.is(file.sourceMap.sourcesContent[1], sourcesContent[1]);
 });
+
+test('uses browserslist config from package.json', async t => {
+	const packageJson = JSON.parse(await import('node:fs').then(({promises: fs}) => fs.readFile(path.join(__dirname, 'package.json'), 'utf8')));
+	const originalBrowserslist = packageJson.browserslist;
+
+	packageJson.browserslist = ['last 1 Chrome version'];
+	await import('node:fs').then(({promises: fs}) => fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n'));
+
+	const stream = autoprefixer();
+	const data = pEvent(stream, 'data');
+
+	stream.end(new Vinyl({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture', 'fixture.css'),
+		contents: Buffer.from('a {\n\tdisplay: flex;\n}'),
+	}));
+
+	const file = await data;
+	t.regex(file.contents.toString(), /display:\s*flex/);
+
+	if (originalBrowserslist) {
+		packageJson.browserslist = originalBrowserslist;
+	} else {
+		delete packageJson.browserslist;
+	}
+
+	await import('node:fs').then(({promises: fs}) => fs.writeFile(path.join(__dirname, 'package.json'), JSON.stringify(packageJson, null, '\t') + '\n'));
+});
