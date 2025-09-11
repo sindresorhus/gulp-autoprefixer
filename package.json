@@ -1,6 +1,6 @@
 {
 	"name": "gulp-autoprefixer",
-	"version": "9.0.0",
+	"version": "10.0.0",
 	"description": "Prefix CSS",
 	"license": "MIT",
 	"repository": "sindresorhus/gulp-autoprefixer",
